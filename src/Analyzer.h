@@ -1,5 +1,6 @@
-#include<strings.h>
-#include<stdio.h>
+#include <strings.h>
+#include <stdio.h>
+#include <regex.h>
 
 typedef struct {
     const char* IF = "if";
@@ -19,6 +20,7 @@ typedef struct {
     const char* AND = "&&";
     const char* OR = "||";
     const char* IDENTIFIER = "[a-zA-Z]\w*";
+    const char* ATTRIBUTE = "^[a-zA-Z]\w*";
     const char* INT_VALUE = "[0-9]+";
     const char* FLOAT_VALUE = "[0-9]+.[0-9+]";
     const char* STRING_VALUE = "\"[a-zA-Z]\w*\"";
@@ -41,6 +43,7 @@ typedef enum {
     AND,
     OR,
     IDENTIFIER,
+    ATTRIBUTE,
     INT_VALUE,
     FLOAT_VALUE
 } TokenLabel;
