@@ -5,8 +5,8 @@ type Token string
 const (
 	If              Token = "\bif\b"
 	Else            Token = "\belse\b"
-	OpenParenthese  Token = "("
-	CloseParenthese Token = ")"
+	OpenParenthese  Token = `\(`
+	CloseParenthese Token = `\)`
 	Equality        Token = "=="
 	Inequality      Token = "!="
 	Less            Token = "<"
@@ -14,8 +14,8 @@ const (
 	Great           Token = ">"
 	GreatEqual      Token = ">="
 	Not             Token = "!"
-	OpenBrace       Token = "{"
-	CloseBrace      Token = "}"
+	OpenBrace       Token = `\{`
+	CloseBrace      Token = `\}`
 	Dot             Token = "."
 	And             Token = "&&"
 	Or              Token = "||"

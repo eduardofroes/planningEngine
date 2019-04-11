@@ -14,5 +14,5 @@ func main() {
 	}
 
 	lex := lexical.LexicalAnalyzer{InputRule: string(fileBytes)}
-	lex.Analyze(lex.InputRule)
+	lex.Tokenize(lex.InputRule)
 }

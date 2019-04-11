@@ -1,6 +1,8 @@
 package lexical
 
 import (
+	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/sirupsen/logrus"
@@ -31,4 +33,14 @@ func (l LexicalAnalyzer) Analyze(ruleString string) []Token {
 	}
 
 	return []Token{Token(0)}
+}
+
+func (l LexicalAnalyzer) Tokenize(ruleString string) {
+
+	for _, token := range GetAllTokens() {
+		sent := regexp.MustCompile(fmt.Sprintf(`\A(#{%s})`, token))
+		indexes := sent.FindIndex([]byte(ruleString))
+		//matched, err := regexp.Match(fmt.Sprintf(`\A(#{%s})/`, token), []byte(ruleString))
+		fmt.Println(indexes)
+	}
 }
