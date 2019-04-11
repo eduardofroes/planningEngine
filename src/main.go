@@ -1,9 +1,18 @@
 package main
 
 import (
-	"github.com/sirupsen/logrus"
+	"fmt"
+	"io/ioutil"
+	"planningEngine/lexical"
 )
 
 func main() {
-	logrus.Info("TEST")
+
+	fileBytes, err := ioutil.ReadFile("/opt/repository/planningEngine/resource/rulesExemples/rules.per")
+	if err != nil {
+		fmt.Print(err)
+	}
+
+	lex := lexical.LexicalAnalyzer{InputRule: string(fileBytes)}
+	lex.Analyze(lex.InputRule)
 }

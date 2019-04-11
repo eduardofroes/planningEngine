@@ -1,4 +1,4 @@
-module planningEngine/src
+module planningEngine
 
 go 1.12
 
