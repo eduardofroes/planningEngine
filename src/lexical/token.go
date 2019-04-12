@@ -1,44 +1,49 @@
 package lexical
 
-type Token string
-
-const (
-	If              Token = "\bif\b"
-	Else            Token = "\belse\b"
-	OpenParenthese  Token = `\(`
-	CloseParenthese Token = `\)`
-	Equality        Token = "=="
-	Inequality      Token = "!="
-	Less            Token = "<"
-	LessEqual       Token = "<="
-	Great           Token = ">"
-	GreatEqual      Token = ">="
-	Not             Token = "!"
-	OpenBrace       Token = `\{`
-	CloseBrace      Token = `\}`
-	Dot             Token = "."
-	And             Token = "&&"
-	Or              Token = "||"
-	Identifier      Token = "\bIdentifier\b"
-	IdentifierName  Token = "[a-zA-Z]\\w*"
-	Attribute       Token = "\bAttribute\b"
-	AttributeName   Token = "^[a-zA-Z]\\w*"
-	Value           Token = "\bValue\b"
-	IntValue        Token = "[0-9]+"
-	FloatValue      Token = "[0-9]+.[0-9+]"
-	StringValue     Token = "\"[a-zA-Z]\\w*\""
-	Plus            Token = "+"
-	Minus           Token = "-"
-	Multiply        Token = "*"
-	Divide          Token = "/"
-	Rest            Token = "%"
-	Save            Token = "\bsave\b"
-	Delete          Token = "\bdelete\b"
-	Get             Token = "\bget\b"
-	Return          Token = "\breturn\b"
-	Input           Token = "\binput.[a-zA-Z]+"
-	Memory          Token = "\bmemory.[a-zA-Z]+"
+import (
+	"fmt"
 )
+
+type Token struct {
+	Name       string
+	Expression string
+}
+
+var If = Token{Name: "if", Expression: fmt.Sprintf("\\s+(if)\\s*%s", OpenParenthese.Expression)}
+var Else = Token{Name: "else", Expression: "\\s*(else)\\s*\\("}
+var OpenParenthese = Token{Name: "OpenParenthese", Expression: `\(`}
+var CloseParenthese = Token{Name: "CloseParenthese", Expression: `\)`}
+var Equality = Token{Name: "Equality", Expression: "=="}
+var Inequality = Token{Name: "Inequality", Expression: "!="}
+var Less = Token{Name: "Less", Expression: "<"}
+var LessEqual = Token{Name: "LessEqual", Expression: "<="}
+var Great = Token{Name: "Great", Expression: ">"}
+var GreatEqual = Token{Name: "GreatEqual", Expression: ">="}
+var Not = Token{Name: "Not", Expression: "!"}
+var OpenBrace = Token{Name: "OpenBrace", Expression: `\{`}
+var CloseBrace = Token{Name: "CloseBrace", Expression: `\}`}
+var Dot = Token{Name: "Dot", Expression: "."}
+var And = Token{Name: "And", Expression: "&&"}
+var Or = Token{Name: "Or", Expression: "||"}
+var Identifier = Token{Name: "Identifier", Expression: ""}
+var IdentifierName = Token{Name: "IdentifierName", Expression: "[a-zA-Z]\\w*"}
+var Attribute = Token{Name: "Attribute", Expression: "Attribute"}
+var AttributeName = Token{Name: "AttributeName", Expression: "[a-zA-Z]\\w*"}
+var Value = Token{Name: "Value", Expression: "Value"}
+var IntValue = Token{Name: "IntValue", Expression: "[0-9]+"}
+var FloatValue = Token{Name: "FloatValue", Expression: "[0-9]+.[0-9+]"}
+var StringValue = Token{Name: "StringValue", Expression: "\"\\w*\""}
+var Plus = Token{Name: "Plus", Expression: "\\+"}
+var Minus = Token{Name: "Minus", Expression: "\\-"}
+var Multiply = Token{Name: "Multiply", Expression: "\\*"}
+var Divide = Token{Name: "Divide", Expression: "\\/"}
+var Rest = Token{Name: "Rest", Expression: "\\%"}
+var Save = Token{Name: "Save", Expression: "save"}
+var Delete = Token{Name: "Delete", Expression: "delete"}
+var Get = Token{Name: "Get", Expression: "get"}
+var Return = Token{Name: "Return", Expression: "return"}
+var Input = Token{Name: "Input", Expression: "input.[a-zA-Z]+"}
+var Memory = Token{Name: "Memory", Expression: "memory.[a-zA-Z]+"}
 
 func GetAllTokens() []Token {
 	tokens := []Token{
