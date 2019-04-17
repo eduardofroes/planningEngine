@@ -10,8 +10,8 @@ type Token struct {
 	ValueFound string
 }
 
-var Function = Token{Name: "Func", Expression: `\s*(func)\s+`}
-var If = Token{Name: "If", Expression: fmt.Sprintf(`\s+(if)\s*%s`, OpenParenthese.Expression)}
+var Function = Token{Name: "Func", Expression: `\s*func\s+`}
+var If = Token{Name: "If", Expression: fmt.Sprintf(`\s+if\s*%s`, OpenParenthese.Expression)}
 var Else = Token{Name: "Else", Expression: `\s*(else)\s*\(`}
 var OpenParenthese = Token{Name: "OpenParenthese", Expression: `\(`}
 var CloseParenthese = Token{Name: "CloseParenthese", Expression: `\)`}
@@ -28,15 +28,12 @@ var Dot = Token{Name: "Dot", Expression: `\.`}
 var And = Token{Name: "And", Expression: `\s+\&\&\s+`}
 var Or = Token{Name: "Or", Expression: `\s+\|\|\s+`}
 var Identifier = Token{Name: "Identifier", Expression: `Identifier\s+`}
-
-//var IdentifierName = Token{Name: "IdentifierName", Expression: "[a-zA-Z]\\w*"}
+var Entity = Token{Name: "Entity", Expression: `\w+(\.+\w+)*`}
 var Attribute = Token{Name: "Attribute", Expression: `Attribute\s+`}
-
-//var AttributeName = Token{Name: "AttributeName", Expression: "[a-zA-Z]\\w*"}
 var Value = Token{Name: "Value", Expression: `Value\s+`}
-var IntValue = Token{Name: "IntValue", Expression: `\s+[0-9]+`}
-var FloatValue = Token{Name: "FloatValue", Expression: `\s+[0-9]+.[0-9+]`}
-var StringValue = Token{Name: "StringValue", Expression: `\"\w*\"`}
+var IntValue = Token{Name: "IntValue", Expression: `\s*[0-9]+\s+`}
+var FloatValue = Token{Name: "FloatValue", Expression: `\s*[0-9]+.[0-9+]`}
+var StringValue = Token{Name: "StringValue", Expression: `\"[a-zA-Z0-9]*\"`}
 var Plus = Token{Name: "Plus", Expression: `\+`}
 var Minus = Token{Name: "Minus", Expression: `\-`}
 var Multiply = Token{Name: "Multiply", Expression: `\*`}
@@ -46,8 +43,10 @@ var Save = Token{Name: "Save", Expression: `save\s+`}
 var Delete = Token{Name: "Delete", Expression: `delete\s+`}
 var Get = Token{Name: "Get", Expression: `get\s+`}
 var Return = Token{Name: "Return", Expression: `return\s+`}
-var Input = Token{Name: "Input", Expression: `input\.[a-zA-Z]+\s+`}
-var Memory = Token{Name: "Memory", Expression: `memory\.[a-zA-Z]+\s+`}
+var Input = Token{Name: "Input", Expression: `\s+input(\.[a-zA-Z]+\s+)*\s+`}
+var Memory = Token{Name: "Memory", Expression: `\s+memory(\.[a-zA-Z]+\s+)*\s+`}
+var In = Token{Name: "In", Expression: `\s+in\s+`}
+var Err = Token{Name: "Error"}
 
 func GetAllTokens() []Token {
 	tokens := []Token{
@@ -67,10 +66,9 @@ func GetAllTokens() []Token {
 		CloseBrace,
 		And,
 		Or,
+		Entity,
 		Identifier,
-		//	IdentifierName,
 		Attribute,
-		//	AttributeName,
 		Value,
 		IntValue,
 		FloatValue,
@@ -86,6 +84,8 @@ func GetAllTokens() []Token {
 		Return,
 		Input,
 		Memory,
+		Err,
+		In,
 	}
 	return tokens
 }
