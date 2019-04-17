@@ -46,7 +46,7 @@ func (l LexicalAnalyzer) Tokenize() error {
 							return err
 						}
 						for _, nextTokenCandidate := range nextTokensCandidate {
-							if nextTokenCandidate.Name != Entity.Name {
+							if nextTokenCandidate.Name != Entity.Name && nextTokenCandidate.Name != IntValue.Name {
 								tokensFound = append(
 									tokensFound,
 									Token{
