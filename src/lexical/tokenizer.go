@@ -41,21 +41,28 @@ func (l LexicalAnalyzer) Tokenize() error {
 				} else {
 					if i+1 < len(l.InputRule) {
 						nextTokensCandidate, err := l.GetTokensCandidate(string(l.InputRule[i+1]))
+						//multiCharTokensCandidate, err := l.GetTokensCandidate(word + string(l.InputRule[i+1]))
+						//nextTokensCandidate = append(nextTokensCandidate, multiCharTokensCandidate...)
+
 						if err != nil {
 							logrus.Error("Error in match tokens in Lexical Analyzer:%v", err)
 							return err
 						}
-						for _, nextTokenCandidate := range nextTokensCandidate {
-							if nextTokenCandidate.Name != Entity.Name && nextTokenCandidate.Name != IntValue.Name {
-								tokensFound = append(
-									tokensFound,
-									Token{
-										Name:       tokenCandidate.Name,
-										Expression: tokenCandidate.Expression,
-										ValueFound: strings.TrimSpace(word),
-									},
-								)
-								word = ""
+
+						if l.InputRule[i+1] != ' ' && len(nextTokensCandidate) > 0 {
+							for _, nextTokenCandidate := range nextTokensCandidate {
+								if nextTokenCandidate.Name != Entity.Name && nextTokenCandidate.Name != IntValue.Name {
+									logrus.Error("%v-%v ", word, len(nextTokensCandidate))
+									tokensFound = append(
+										tokensFound,
+										Token{
+											Name:       tokenCandidate.Name,
+											Expression: tokenCandidate.Expression,
+											ValueFound: strings.TrimSpace(word),
+										},
+									)
+									word = ""
+								}
 							}
 						}
 					} else {
