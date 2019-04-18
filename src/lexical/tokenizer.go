@@ -56,8 +56,6 @@ func (l LexicalAnalyzer) Tokenize() error {
 									},
 								)
 								word = ""
-							} else {
-								break
 							}
 						}
 					} else {
@@ -82,7 +80,7 @@ func (l LexicalAnalyzer) GetTokensCandidate(Word string) ([]Token, error) {
 	tokensCandidate := []Token{}
 	for _, token := range tokens {
 		if token.Expression != "" {
-			matched, err := regexp.Match(fmt.Sprintf(`%s`, token.Expression), []byte(Word))
+			matched, err := regexp.Match(token.Expression, []byte(Word))
 			if err != nil {
 				return nil, err
 			}
