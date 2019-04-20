@@ -40,7 +40,7 @@ var Get = Token{Name: "Get", Expression: `\s*get\s+`}
 var Return = Token{Name: "Return", Expression: `\s*return\s+`}
 var Input = Token{Name: "Input", Expression: `\s*input(\.[a-zA-Z0-9]+)*\s+`}
 var Memory = Token{Name: "Memory", Expression: `\s*memory(\.[a-zA-Z0-9]+)*\s+`}
-var In = Token{Name: "In", Expression: `\s*(in)\s+`}
+var In = Token{Name: "In", Expression: `\s+(in)\s+`}
 var Err = Token{Name: "Error"}
 
 func GetAllTokens() []Token {
