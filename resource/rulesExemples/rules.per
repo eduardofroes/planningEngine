@@ -1,8 +1,18 @@
-func findJewelRed(Identifier x1) {
-    get input.jewel i1
+propose findRedJewel() {
+    fetch input where jewel.color == "red" in i1
 
-    if (i1.color == "red") {
-        save i1 in memory.plans
-        delete i1 in memory.plans
+    if (i1 != null) {
+        return applyFindJewelRed(i1)
+    } else {
+        return null
     }
+}
+
+apply goToRedJewel(Identifier i1) {
+    Identifier operator
+    operator.name = "goToRedJewel"
+    operator.jewel = i1
+
+    save operator in memory.operators
+    delete i1   
 }

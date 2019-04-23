@@ -38,10 +38,10 @@ func (l LexicalAnalyzer) Tokenize() error {
 				)
 				word = ""
 			} else {
-				if len(tokensCandidate) == 1  {
+				if len(tokensCandidate) == 1 {
 					if i+1 < len(l.InputRule) {
 						if string(l.InputRule[i+1]) == " " {
-							nextTokensCandidate, err := l.GetTokensCandidate(word+string(l.InputRule[i+1]))
+							nextTokensCandidate, err := l.GetTokensCandidate(word + string(l.InputRule[i+1]))
 							if err != nil {
 								logrus.Error("Error in match tokens in Lexical Analyzer:%v", err)
 								return err
@@ -66,7 +66,7 @@ func (l LexicalAnalyzer) Tokenize() error {
 							}
 
 							for _, nextTokenCandidate := range nextTokensCandidate {
-								if (nextTokenCandidate.Name != Entity.Name && nextTokenCandidate.Name != IntValue.Name) {
+								if nextTokenCandidate.Name != Entity.Name && nextTokenCandidate.Name != IntValue.Name {
 									tokensFound = append(
 										tokensFound,
 										Token{
@@ -124,7 +124,7 @@ func (l LexicalAnalyzer) GetTokensCandidate(Word string) ([]Token, error) {
 func wordTreatment(word string) string {
 	return strings.Replace(
 		strings.Replace(
-			strings.Replace(word,"\n"," ",-1),
+			strings.Replace(word, "\n", " ", -1),
 			"\t",
 			" ",
 			-1,

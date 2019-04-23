@@ -6,18 +6,17 @@ type Token struct {
 	ValueFound string
 }
 
-var Function = Token{Name: "Func", Expression: `\s*func\s+`}
+var Apply = Token{Name: "Apply", Expression: `\s*apply\s+`}
+var Propose = Token{Name: "Propose", Expression: `\s*propose\s+`}
 var If = Token{Name: "If", Expression: `if\s+\(*`}
 var Else = Token{Name: "Else", Expression: `\s*else\s*`}
 var OpenParenthese = Token{Name: "OpenParenthese", Expression: `\(`}
 var CloseParenthese = Token{Name: "CloseParenthese", Expression: `\)`}
-var Equality = Token{Name: "Equality", Expression: `\=\=`}
-var Inequality = Token{Name: "Inequality", Expression: `\!\=`}
+var Equal = Token{Name: "Equal", Expression: `\=`}
 var Less = Token{Name: "Less", Expression: `\<`}
-var LessEqual = Token{Name: "LessEqual", Expression: `\<\=`}
 var Great = Token{Name: "Great", Expression: `\>`}
-var GreatEqual = Token{Name: "GreatEqual", Expression: `\>\=`}
 var Not = Token{Name: "Not", Expression: `\!`}
+var DoubleQuotes = Token{Name: "DoubleQuotes", Expression: `\"`}
 var OpenBrace = Token{Name: "OpenBrace", Expression: `\{`}
 var CloseBrace = Token{Name: "CloseBrace", Expression: `\}`}
 var And = Token{Name: "And", Expression: `\s+\&\&\s+`}
@@ -28,7 +27,6 @@ var Attribute = Token{Name: "Attribute", Expression: `Attribute\s+`}
 var Value = Token{Name: "Value", Expression: `Value\s+`}
 var IntValue = Token{Name: "IntValue", Expression: `(\=\=|\=|\s+)[0-9]+\s+`}
 var FloatValue = Token{Name: "FloatValue", Expression: `(\=\=|\=|\s+)[0-9]+.[0-9+]`}
-var StringValue = Token{Name: "StringValue", Expression: `\s*(["'])(\?:(\?=(\\?))\\2.)*?\\1\s*`}
 var Plus = Token{Name: "Plus", Expression: `\+`}
 var Minus = Token{Name: "Minus", Expression: `\-`}
 var Multiply = Token{Name: "Multiply", Expression: `\*`}
@@ -36,7 +34,9 @@ var Divide = Token{Name: "Divide", Expression: `\/`}
 var Rest = Token{Name: "Rest", Expression: `\%`}
 var Save = Token{Name: "Save", Expression: `\s*save\s+`}
 var Delete = Token{Name: "Delete", Expression: `\s*delete\s+`}
-var Get = Token{Name: "Get", Expression: `\s*get\s+`}
+var Fetch = Token{Name: "Fetch", Expression: `\s*fetch\s+`}
+var Where = Token{Name: "Where", Expression: `\s*where\s+`}
+var Null = Token{Name: "Null", Expression: `\s*null\s+`}
 var Return = Token{Name: "Return", Expression: `\s*return\s+`}
 var Input = Token{Name: "Input", Expression: `\s*input(\.[a-zA-Z0-9]+)*\s+`}
 var Memory = Token{Name: "Memory", Expression: `\s*memory(\.[a-zA-Z0-9]+)*\s+`}
@@ -45,18 +45,15 @@ var Err = Token{Name: "Error"}
 
 func GetAllTokens() []Token {
 	tokens := []Token{
-		Function,
 		If,
 		Else,
 		OpenParenthese,
 		CloseParenthese,
-		Equality,
-		Inequality,
+		Equal,
 		Less,
-		LessEqual,
 		Great,
-		GreatEqual,
 		Not,
+		DoubleQuotes,
 		OpenBrace,
 		CloseBrace,
 		And,
@@ -67,7 +64,6 @@ func GetAllTokens() []Token {
 		Value,
 		IntValue,
 		FloatValue,
-		StringValue,
 		Plus,
 		Minus,
 		Multiply,
@@ -75,8 +71,12 @@ func GetAllTokens() []Token {
 		Rest,
 		Save,
 		Delete,
-		Get,
+		Fetch,
+		Apply,
+		Propose,
+		Where,
 		Return,
+		Null,
 		Input,
 		Memory,
 		Err,
