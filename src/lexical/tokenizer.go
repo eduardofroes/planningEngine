@@ -1,7 +1,6 @@
 package lexical
 
 import (
-	"fmt"
 	"regexp"
 	"strings"
 
@@ -14,6 +13,7 @@ type LexicalAnalyzer struct {
 	TokensFound []Token
 }
 
+// Tokenize method is responsible for tokenize string into tokens.
 func (l LexicalAnalyzer) Tokenize() error {
 	tokensFound := []Token{}
 	word := ""
@@ -22,7 +22,7 @@ func (l LexicalAnalyzer) Tokenize() error {
 		tokensCandidate, err := l.GetTokensCandidate(word)
 
 		if err != nil {
-			logrus.Error("Error in match tokens in Lexical Analyzer:%v", err)
+			logrus.Fatal("Error in match tokens in Lexical Analyzer: %s", err.Error())
 			return err
 		}
 
@@ -43,7 +43,7 @@ func (l LexicalAnalyzer) Tokenize() error {
 						if string(l.InputRule[i+1]) == " " {
 							nextTokensCandidate, err := l.GetTokensCandidate(word + string(l.InputRule[i+1]))
 							if err != nil {
-								logrus.Error("Error in match tokens in Lexical Analyzer:%v", err)
+								logrus.Fatal("Error in match tokens in Lexical Analyzer: %s", err.Error())
 								return err
 							}
 
@@ -61,7 +61,7 @@ func (l LexicalAnalyzer) Tokenize() error {
 						} else {
 							nextTokensCandidate, err := l.GetTokensCandidate(string(l.InputRule[i+1]))
 							if err != nil {
-								logrus.Error("Error in match tokens in Lexical Analyzer:%v", err)
+								logrus.Fatal("Error in match tokens in Lexical Analyzer: %s", err.Error())
 								return err
 							}
 
@@ -89,13 +89,10 @@ func (l LexicalAnalyzer) Tokenize() error {
 
 	l.TokensFound = tokensFound
 
-	for _, f := range tokensFound {
-		logrus.Info(fmt.Sprintf("%s : %s", f.Name, f.ValueFound))
-	}
-
 	return nil
 }
 
+// GetTokensCandidate is a method that gets all tokens candidate which was matched by an regex.
 func (l LexicalAnalyzer) GetTokensCandidate(Word string) ([]Token, error) {
 	tokens := GetAllTokens()
 	tokensCandidate := []Token{}
@@ -135,6 +132,7 @@ func wordTreatment(word string) string {
 	)
 }
 
+//TokenContains verifies if there is a specific token in slice.
 func TokenContains(tokens []Token, targetToken Token) bool {
 	for _, token := range tokens {
 		if token.Name == targetToken.Name {

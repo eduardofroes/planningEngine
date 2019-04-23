@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"planningEngine/lexical"
+
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
@@ -17,4 +19,8 @@ func main() {
 
 	lex := lexical.LexicalAnalyzer{InputRule: string(fileBytes)}
 	lex.Tokenize()
+
+	for _, f := range lex.TokensFound {
+		logrus.Info(fmt.Sprintf("%s : %s", f.Name, f.ValueFound))
+	}
 }

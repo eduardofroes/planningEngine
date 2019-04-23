@@ -1,5 +1,6 @@
 package lexical
 
+//Token represents the string that will be matched by regex when tokenizer method is running.
 type Token struct {
 	Name       string
 	Expression string
