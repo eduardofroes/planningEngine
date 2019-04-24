@@ -14,10 +14,10 @@ type LexicalAnalyzer struct {
 }
 
 // Tokenize method is responsible for tokenize string into tokens.
-func (l LexicalAnalyzer) Tokenize() error {
+func (l *LexicalAnalyzer) Tokenize() error {
 	tokensFound := []Token{}
 	word := ""
-	for i, c := range wordTreatment(l.InputRule) {
+	for i, c := range wordProcessing(l.InputRule) {
 		word = word + string(c)
 		tokensCandidate, err := l.GetTokensCandidate(word)
 
@@ -118,7 +118,7 @@ func (l LexicalAnalyzer) GetTokensCandidate(Word string) ([]Token, error) {
 	return tokensCandidate, nil
 }
 
-func wordTreatment(word string) string {
+func wordProcessing(word string) string {
 	return strings.Replace(
 		strings.Replace(
 			strings.Replace(word, "\n", " ", -1),

@@ -9,15 +9,16 @@ type Token struct {
 
 var Apply = Token{Name: "Apply", Expression: `\s*apply\s+`}
 var Propose = Token{Name: "Propose", Expression: `\s*propose\s+`}
-var If = Token{Name: "If", Expression: `if\s+\(*`}
+var If = Token{Name: "If", Expression: `s+if\s+`}
 var Else = Token{Name: "Else", Expression: `\s*else\s*`}
-var OpenParenthese = Token{Name: "OpenParenthese", Expression: `\(`}
-var CloseParenthese = Token{Name: "CloseParenthese", Expression: `\)`}
+var OpenParentheses = Token{Name: "OpenParentheses", Expression: `\(`}
+var CloseParentheses = Token{Name: "CloseParentheses", Expression: `\)`}
 var Equal = Token{Name: "Equal", Expression: `\=`}
+var DoubleQuotes = Token{Name: "DoubleQuotes", Expression: `\"`}
 var Less = Token{Name: "Less", Expression: `\<`}
 var Great = Token{Name: "Great", Expression: `\>`}
 var Not = Token{Name: "Not", Expression: `\!`}
-var DoubleQuotes = Token{Name: "DoubleQuotes", Expression: `\"`}
+var Comma = Token{Name: "Comma", Expression: `\,`}
 var OpenBrace = Token{Name: "OpenBrace", Expression: `\{`}
 var CloseBrace = Token{Name: "CloseBrace", Expression: `\}`}
 var And = Token{Name: "And", Expression: `\s+\&\&\s+`}
@@ -40,21 +41,25 @@ var Where = Token{Name: "Where", Expression: `\s*where\s+`}
 var Null = Token{Name: "Null", Expression: `\s*null\s+`}
 var Return = Token{Name: "Return", Expression: `\s*return\s+`}
 var Input = Token{Name: "Input", Expression: `\s*input(\.[a-zA-Z0-9]+)*\s+`}
+var Output = Token{Name: "Input", Expression: `\s*output(\.[a-zA-Z0-9]+)*\s+`}
 var Memory = Token{Name: "Memory", Expression: `\s*memory(\.[a-zA-Z0-9]+)*\s+`}
-var In = Token{Name: "In", Expression: `\s+(in)\s+`}
+var In = Token{Name: "In", Expression: `\s+in\s+`}
+
 var Err = Token{Name: "Error"}
+var SubSequence = Token{Name: "SubSequence"}
 
 func GetAllTokens() []Token {
-	tokens := []Token{
+	return []Token{
 		If,
 		Else,
-		OpenParenthese,
-		CloseParenthese,
+		OpenParentheses,
+		CloseParentheses,
 		Equal,
 		Less,
 		Great,
 		Not,
 		DoubleQuotes,
+		Comma,
 		OpenBrace,
 		CloseBrace,
 		And,
@@ -79,9 +84,10 @@ func GetAllTokens() []Token {
 		Return,
 		Null,
 		Input,
+		Output,
 		Memory,
-		Err,
 		In,
+		Err,
+		SubSequence,
 	}
-	return tokens
 }
