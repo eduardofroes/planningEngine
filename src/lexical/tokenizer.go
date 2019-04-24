@@ -20,8 +20,11 @@ func (l *LexicalAnalyzer) Tokenize() error {
 	word := ""
 	for i, c := range wordProcessing(l.InputRule) {
 		word = word + string(c)
-		tokensCandidate, err := l.GetTokensCandidate(word)
+		if len(strings.TrimSpace(word)) == 0 {
+			continue
+		}
 
+		tokensCandidate, err := l.GetTokensCandidate(word)
 		if err != nil {
 			logrus.Fatal("Error in match tokens in Lexical Analyzer: %s", err.Error())
 			return err
@@ -39,16 +42,34 @@ func (l *LexicalAnalyzer) Tokenize() error {
 				)
 				word = ""
 			} else {
-				if len(tokensCandidate) == 1 {
-					if i+1 < len(l.InputRule) {
-						if string(l.InputRule[i+1]) == " " {
-							nextTokensCandidate, err := l.GetTokensCandidate(word + string(l.InputRule[i+1]))
-							if err != nil {
-								logrus.Fatal("Error in match tokens in Lexical Analyzer: %s", err.Error())
-								return err
-							}
+				if i+1 < len(l.InputRule) {
+					if string(l.InputRule[i+1]) == " " {
+						nextTokensCandidate, err := l.GetTokensCandidate(word + " ")
+						if err != nil {
+							logrus.Fatal("Error in match tokens in Lexical Analyzer: %s", err.Error())
+							return err
+						}
 
-							if len(nextTokensCandidate) == 1 {
+						if len(nextTokensCandidate) == 1 {
+							tokensFound = append(
+								tokensFound,
+								Token{
+									Name:       tokenCandidate.Name,
+									Expression: tokenCandidate.Expression,
+									ValueFound: strings.TrimSpace(word),
+								},
+							)
+							word = ""
+						}
+					} else {
+						nextTokensCandidate, err := l.GetTokensCandidate(string(l.InputRule[i+1]))
+						if err != nil {
+							logrus.Fatal("Error in match tokens in Lexical Analyzer: %s", err.Error())
+							return err
+						}
+
+						for _, nextTokenCandidate := range nextTokensCandidate {
+							if nextTokenCandidate.Name != Entity.Name && nextTokenCandidate.Name != IntValue.Name && nextTokenCandidate.Name != OpenParentheses.Name {
 								tokensFound = append(
 									tokensFound,
 									Token{
@@ -59,30 +80,10 @@ func (l *LexicalAnalyzer) Tokenize() error {
 								)
 								word = ""
 							}
-						} else {
-							nextTokensCandidate, err := l.GetTokensCandidate(string(l.InputRule[i+1]))
-							if err != nil {
-								logrus.Fatal("Error in match tokens in Lexical Analyzer: %s", err.Error())
-								return err
-							}
-
-							for _, nextTokenCandidate := range nextTokensCandidate {
-								if nextTokenCandidate.Name != Entity.Name && nextTokenCandidate.Name != IntValue.Name {
-									tokensFound = append(
-										tokensFound,
-										Token{
-											Name:       tokenCandidate.Name,
-											Expression: tokenCandidate.Expression,
-											ValueFound: strings.TrimSpace(word),
-										},
-									)
-									word = ""
-								}
-							}
 						}
-					} else {
-						tokensFound = append(tokensFound, Err)
 					}
+				} else {
+					tokensFound = append(tokensFound, Err)
 				}
 			}
 		}
