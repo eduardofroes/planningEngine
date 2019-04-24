@@ -9,7 +9,7 @@ type Token struct {
 
 var Apply = Token{Name: "Apply", Expression: `\s*apply\s+`}
 var Propose = Token{Name: "Propose", Expression: `\s*propose\s+`}
-var If = Token{Name: "If", Expression: `s+if\s+`}
+var If = Token{Name: "If", Expression: `if\s+\(*`}
 var Else = Token{Name: "Else", Expression: `\s*else\s*`}
 var OpenParentheses = Token{Name: "OpenParentheses", Expression: `\(`}
 var CloseParentheses = Token{Name: "CloseParentheses", Expression: `\)`}

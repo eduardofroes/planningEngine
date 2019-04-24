@@ -6,7 +6,6 @@ import (
 
 type SyntacticalAnalyzer struct {
 	InputTokens         *[]lexical.Token
-	FilesPath           []string
 	SyntacticalSequence []Sequence
 	LastAnalyze         bool
 }
