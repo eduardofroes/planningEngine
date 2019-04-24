@@ -14,7 +14,6 @@ var Else = Token{Name: "Else", Expression: `\s*else\s*`}
 var OpenParentheses = Token{Name: "OpenParentheses", Expression: `\(`}
 var CloseParentheses = Token{Name: "CloseParentheses", Expression: `\)`}
 var Equal = Token{Name: "Equal", Expression: `\=`}
-var DoubleQuotes = Token{Name: "DoubleQuotes", Expression: `\"`}
 var Less = Token{Name: "Less", Expression: `\<`}
 var Great = Token{Name: "Great", Expression: `\>`}
 var Not = Token{Name: "Not", Expression: `\!`}
@@ -29,6 +28,7 @@ var Attribute = Token{Name: "Attribute", Expression: `Attribute\s+`}
 var Value = Token{Name: "Value", Expression: `Value\s+`}
 var IntValue = Token{Name: "IntValue", Expression: `(\=\=|\=|\s+)[0-9]+\s+`}
 var FloatValue = Token{Name: "FloatValue", Expression: `(\=\=|\=|\s+)[0-9]+.[0-9+]`}
+var StringValue = Token{Name: "StringValue", Expression: `\"(.*?)\"\s+`}
 var Plus = Token{Name: "Plus", Expression: `\+`}
 var Minus = Token{Name: "Minus", Expression: `\-`}
 var Multiply = Token{Name: "Multiply", Expression: `\*`}
@@ -44,7 +44,6 @@ var Input = Token{Name: "Input", Expression: `\s*input(\.[a-zA-Z0-9]+)*\s+`}
 var Output = Token{Name: "Input", Expression: `\s*output(\.[a-zA-Z0-9]+)*\s+`}
 var Memory = Token{Name: "Memory", Expression: `\s*memory(\.[a-zA-Z0-9]+)*\s+`}
 var In = Token{Name: "In", Expression: `\s+in\s+`}
-
 var Err = Token{Name: "Error"}
 var SubSequence = Token{Name: "SubSequence"}
 
@@ -58,7 +57,6 @@ func GetAllTokens() []Token {
 		Less,
 		Great,
 		Not,
-		DoubleQuotes,
 		Comma,
 		OpenBrace,
 		CloseBrace,
@@ -70,6 +68,7 @@ func GetAllTokens() []Token {
 		Value,
 		IntValue,
 		FloatValue,
+		StringValue,
 		Plus,
 		Minus,
 		Multiply,

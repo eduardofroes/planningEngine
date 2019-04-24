@@ -9,6 +9,7 @@ import (
 
 // LexicalAnalyzer Structure used to analyze rules statements.
 type LexicalAnalyzer struct {
+	FilesPath   []string
 	InputRule   string
 	TokensFound []Token
 }

@@ -1,31 +1,32 @@
 package syntactical
 
 import (
-	"planningEngine/src/lexical"
+	"planningEngine/lexical"
 )
 
 type SyntacticalAnalyzer struct {
-	InputTokens *[]lexical.Token
-	FilesPath []string
+	InputTokens         *[]lexical.Token
+	FilesPath           []string
 	SyntacticalSequence []Sequence
-	LastAnalyze bool
+	LastAnalyze         bool
 }
 
 type Sequence struct {
-	Name string
+	Name        string
 	TokensCheck [][]lexical.Token
 }
 
-func GetAllSequence() []Sequence{
-	 return []Sequence{
+// GetAllSequence is responsible to gets all sequence which is allowed in syntactical analyzer.
+func GetAllSequence() []Sequence {
+	return []Sequence{
 		{
 			Name: lexical.If.Name,
 			TokensCheck: [][]lexical.Token{
 				{
 					lexical.If,
-					lexical.OpenParenthese,
+					lexical.OpenParentheses,
 					lexical.SubSequence,
-					lexical.CloseParenthese,
+					lexical.CloseParentheses,
 					lexical.OpenBrace,
 					lexical.SubSequence,
 					lexical.CloseBrace,
@@ -45,88 +46,68 @@ func GetAllSequence() []Sequence{
 				{
 					lexical.Propose,
 					lexical.Entity,
-					lexical.OpenParenthese,
+					lexical.OpenParentheses,
 					lexical.SubSequence,
-					lexical.CloseParenthese,
+					lexical.CloseParentheses,
 					lexical.OpenBrace,
 					lexical.SubSequence,
 					lexical.CloseBrace,
 				},
 			},
-		 },
-		 {
-			 Name: lexical.Apply.Name,
-			 TokensCheck: [][]lexical.Token{
-				 {
-					 lexical.Apply,
-					 lexical.Entity,
-					 lexical.OpenParenthese,
-					 lexical.SubSequence,
-					 lexical.CloseParenthese,
-					 lexical.OpenBrace,
-					 lexical.SubSequence,
-					 lexical.CloseBrace,
-				 },
-			 },
-		 },
-		 {
-			 Name: lexical.Identifier.Name,
-			 TokensCheck: [][]lexical.Token{
-				 {
-					 lexical.Identifier,
-					 lexical.Entity,
-				 },
-				 {
-					 lexical.Identifier,
-					 lexical.Entity,
-					 lexical.Comma,
-				 },
-			 },
-		 },
-		 {
-			 Name: "Assignment",
-			 TokensCheck: [][]lexical.Token{
-				 {
-					 lexical.Entity,
-					 lexical.Equal,
-					 lexical.FloatValue,
-				 },
-				 {
-					 lexical.Entity,
-					 lexical.Equal,
-					 lexical.IntValue,
-				 },
-				 {
-					 lexical.Entity,
-					 lexical.Equal,
-					 lexical.DoubleQuotes,
-					 lexical.Entity,
-					 lexical.DoubleQuotes,
-				 },
-				 {
-					 lexical.Entity,
-					 lexical.Equal,
-					 lexical.DoubleQuotes,
-					 lexical.FloatValue,
-					 lexical.DoubleQuotes,
-				 },
-				 {
-					 lexical.Entity,
-					 lexical.Equal,
-					 lexical.DoubleQuotes,
-					 lexical.IntValue,
-					 lexical.DoubleQuotes,
-				 },
-			 },
-		 },
+		},
+		{
+			Name: lexical.Apply.Name,
+			TokensCheck: [][]lexical.Token{
+				{
+					lexical.Apply,
+					lexical.Entity,
+					lexical.OpenParentheses,
+					lexical.SubSequence,
+					lexical.CloseParentheses,
+					lexical.OpenBrace,
+					lexical.SubSequence,
+					lexical.CloseBrace,
+				},
+			},
+		},
+		{
+			Name: lexical.Identifier.Name,
+			TokensCheck: [][]lexical.Token{
+				{
+					lexical.Identifier,
+					lexical.Entity,
+				},
+				{
+					lexical.Identifier,
+					lexical.Entity,
+					lexical.Comma,
+				},
+			},
+		},
+		{
+			Name: "Assignment",
+			TokensCheck: [][]lexical.Token{
+				{
+					lexical.Entity,
+					lexical.Equal,
+					lexical.FloatValue,
+				},
+				{
+					lexical.Entity,
+					lexical.Equal,
+					lexical.IntValue,
+				},
+				{
+					lexical.Entity,
+					lexical.Equal,
+					lexical.StringValue,
+				},
+			},
+		},
 	}
 }
 
 func (s SyntacticalAnalyzer) SyntacticalAnalyzer() (bool, error) {
 
-
-
 	return true, nil
 }
-
-
