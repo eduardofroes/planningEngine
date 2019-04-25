@@ -1,7 +1,7 @@
 propose findRedJewel() {
     fetch input where jewel.color == "red" in i1
 
-    if(i1 != null){
+    if(i1 != null && input.name == "Creature"){
         return applyFindJewelRed(i1)
     }else{
         return null
@@ -11,7 +11,7 @@ propose findRedJewel() {
 apply goToRedJewel(Identifier i1) {
     Identifier operator
     operator.name = "goToRedJewel"
-    operator.count = 9
+    operator.count=9
     operator.value = 1.5
     operator.jewel = i1
 

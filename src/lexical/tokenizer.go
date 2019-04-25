@@ -17,14 +17,14 @@ type LexicalAnalyzer struct {
 // Tokenize method is responsible for tokenize string into tokens.
 func (l *LexicalAnalyzer) Tokenize() error {
 	tokensFound := []Token{}
-	word := ""
+	word := " "
 	for i, c := range wordProcessing(l.InputRule) {
 		word = word + string(c)
 		if len(strings.TrimSpace(word)) == 0 {
 			continue
 		}
 
-		tokensCandidate, err := l.GetTokensCandidate(word)
+		tokensCandidate, err := l.GetTokensCandidate(GetAllTokens(), word)
 		if err != nil {
 			logrus.Fatal("Error in match tokens in Lexical Analyzer: %s", err.Error())
 			return err
@@ -40,11 +40,15 @@ func (l *LexicalAnalyzer) Tokenize() error {
 						ValueFound: strings.TrimSpace(word),
 					},
 				)
-				word = ""
+				word = " "
 			} else {
 				if i+1 < len(l.InputRule) {
+					if len(strings.TrimSpace(word+" ")) == 0 {
+						continue
+					}
+
 					if string(l.InputRule[i+1]) == " " {
-						nextTokensCandidate, err := l.GetTokensCandidate(word + " ")
+						nextTokensCandidate, err := l.GetTokensCandidate(GetAllTokens(), word+" ")
 						if err != nil {
 							logrus.Fatal("Error in match tokens in Lexical Analyzer: %s", err.Error())
 							return err
@@ -59,17 +63,19 @@ func (l *LexicalAnalyzer) Tokenize() error {
 									ValueFound: strings.TrimSpace(word),
 								},
 							)
-							word = ""
+							word = " "
 						}
 					} else {
-						nextTokensCandidate, err := l.GetTokensCandidate(string(l.InputRule[i+1]))
+						nextTokensCandidate, err := l.GetTokensCandidate(GetAllTokens(), string(l.InputRule[i+1]))
 						if err != nil {
 							logrus.Fatal("Error in match tokens in Lexical Analyzer: %s", err.Error())
 							return err
 						}
 
 						for _, nextTokenCandidate := range nextTokensCandidate {
-							if nextTokenCandidate.Name != Entity.Name && nextTokenCandidate.Name != IntValue.Name && nextTokenCandidate.Name != OpenParentheses.Name {
+							if nextTokenCandidate.Name != Entity.Name &&
+								nextTokenCandidate.Name != IntValue.Name &&
+								nextTokenCandidate.Name != StringValue.Name {
 								tokensFound = append(
 									tokensFound,
 									Token{
@@ -78,12 +84,10 @@ func (l *LexicalAnalyzer) Tokenize() error {
 										ValueFound: strings.TrimSpace(word),
 									},
 								)
-								word = ""
+								word = " "
 							}
 						}
 					}
-				} else {
-					tokensFound = append(tokensFound, Err)
 				}
 			}
 		}
@@ -95,10 +99,14 @@ func (l *LexicalAnalyzer) Tokenize() error {
 }
 
 // GetTokensCandidate is a method that gets all tokens candidate which was matched by an regex.
-func (l LexicalAnalyzer) GetTokensCandidate(Word string) ([]Token, error) {
-	tokens := GetAllTokens()
+func (l LexicalAnalyzer) GetTokensCandidate(Tokens []Token, Word string) ([]Token, error) {
 	tokensCandidate := []Token{}
-	for _, token := range tokens {
+
+	if Tokens == nil {
+		Tokens = GetAllTokens()
+	}
+
+	for _, token := range Tokens {
 		if token.Expression != "" {
 			matched, err := regexp.Match(token.Expression, []byte(Word))
 			if err != nil {

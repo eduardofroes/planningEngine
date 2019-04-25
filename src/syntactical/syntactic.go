@@ -99,7 +99,9 @@ func GetAllSequence() []Sequence {
 				{
 					lexical.Entity,
 					lexical.Equal,
-					lexical.StringValue,
+					lexical.DoubleQuotes,
+					lexical.Entity,
+					lexical.DoubleQuotes,
 				},
 			},
 		},
