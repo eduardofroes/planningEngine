@@ -1,7 +1,7 @@
 package syntactical
 
 import (
-	"planningEngine/lexical"
+	"planningEngine/src/lexical"
 )
 
 type SyntacticalAnalyzer struct {

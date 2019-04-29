@@ -74,8 +74,7 @@ func (l *LexicalAnalyzer) Tokenize() error {
 
 						for _, nextTokenCandidate := range nextTokensCandidate {
 							if nextTokenCandidate.Name != Entity.Name &&
-								nextTokenCandidate.Name != IntValue.Name &&
-								nextTokenCandidate.Name != StringValue.Name {
+								nextTokenCandidate.Name != IntValue.Name {
 								tokensFound = append(
 									tokensFound,
 									Token{
@@ -126,6 +125,25 @@ func (l LexicalAnalyzer) GetTokensCandidate(Tokens []Token, Word string) ([]Toke
 	}
 
 	return tokensCandidate, nil
+}
+
+func tokensProcessing(tokensFound *[]Token, tokenSequence []Token, tokenApply []Token) []Token {
+	seqIndex := 0
+	posSeq := []int{}
+
+	for i, tokenFound := range *tokensFound {
+		if tokenFound.Name == tokenSequence[seqIndex].Name {
+			posSeq[seqIndex] = i
+			seqIndex++
+			if seqIndex+1 == len(tokenSequence) {
+
+			}
+		} else {
+			seqIndex = 0
+		}
+	}
+
+	return *tokensFound
 }
 
 func wordProcessing(word string) string {
