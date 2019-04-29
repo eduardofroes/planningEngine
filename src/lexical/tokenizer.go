@@ -128,22 +128,26 @@ func (l LexicalAnalyzer) GetTokensCandidate(Tokens []Token, Word string) ([]Toke
 }
 
 func tokensProcessing(tokensFound *[]Token, tokenSequence []Token, tokenApply []Token) []Token {
-	seqIndex := 0
-	posSeq := []int{}
+	tokensCounter := 0
+	processedTokens := []Token{}
+	previousTokens := []Token{}
 
-	for i, tokenFound := range *tokensFound {
-		if tokenFound.Name == tokenSequence[seqIndex].Name {
-			posSeq[seqIndex] = i
-			seqIndex++
-			if seqIndex+1 == len(tokenSequence) {
-
+	for _, tokenFound := range *tokensFound {
+		if tokenFound.Name == tokenSequence[tokensCounter].Name {
+			tokensCounter++
+			if tokensCounter == len(tokenSequence) {
+				processedTokens = append(processedTokens, tokenSequence...)
+			} else {
+				previousTokens = append(previousTokens, tokenFound)
 			}
 		} else {
-			seqIndex = 0
+			processedTokens = append(processedTokens, tokenFound)
+			previousTokens = []Token{}
+			tokensCounter = 0
 		}
 	}
 
-	return *tokensFound
+	return processedTokens
 }
 
 func wordProcessing(word string) string {
