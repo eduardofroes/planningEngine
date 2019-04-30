@@ -28,6 +28,8 @@ var Equal = Token{Name: "Equal", Expression: `\=`}
 var Less = Token{Name: "Less", Expression: `\<`}
 var Great = Token{Name: "Great", Expression: `\>`}
 var Not = Token{Name: "Not", Expression: `\!`}
+var ComparableSignal = Token{Name: "ComparableSignal", Expression: `\s*(\<\=|\>\=|\!\=|\=\=)\s*`}
+
 var Comma = Token{Name: "Comma", Expression: `\,`}
 var OpenBrace = Token{Name: "OpenBrace", Expression: `\{`}
 var CloseBrace = Token{Name: "CloseBrace", Expression: `\}`}

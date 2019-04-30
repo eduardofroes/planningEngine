@@ -92,7 +92,7 @@ func (l *LexicalAnalyzer) Tokenize() error {
 		}
 	}
 
-	l.TokensFound = tokensFound
+	l.TokensFound = tokensProcessing(&tokensFound)
 
 	return nil
 }
@@ -127,7 +127,17 @@ func (l LexicalAnalyzer) GetTokensCandidate(Tokens []Token, Word string) ([]Toke
 	return tokensCandidate, nil
 }
 
-func tokensProcessing(tokensFound *[]Token, tokenSequence []Token, tokenApply []Token) []Token {
+func tokensProcessing(tokensFound *[]Token) []Token {
+	processedTokens := replaceSequence(tokensFound, []Token{DoubleQuotes, Entity, DoubleQuotes}, StringValue)
+	processedTokens = replaceSequence(&processedTokens, []Token{Equal, Equal}, ComparableSignal)
+	processedTokens = replaceSequence(&processedTokens, []Token{Less, Equal}, ComparableSignal)
+	processedTokens = replaceSequence(&processedTokens, []Token{Great, Equal}, ComparableSignal)
+	processedTokens = replaceSequence(&processedTokens, []Token{Not, Equal}, ComparableSignal)
+
+	return processedTokens
+}
+
+func replaceSequence(tokensFound *[]Token, tokenSequence []Token, tokenApply Token) []Token {
 	tokensCounter := 0
 	processedTokens := []Token{}
 	previousTokens := []Token{}
@@ -136,7 +146,16 @@ func tokensProcessing(tokensFound *[]Token, tokenSequence []Token, tokenApply []
 		if tokenFound.Name == tokenSequence[tokensCounter].Name {
 			tokensCounter++
 			if tokensCounter == len(tokenSequence) {
-				processedTokens = append(processedTokens, tokenSequence...)
+				previousTokens = append(previousTokens, tokenFound)
+				newTokenApply := Token{Name: tokenApply.Name, Expression: tokenApply.Expression}
+
+				for _, previousToken := range previousTokens {
+					newTokenApply.ValueFound += previousToken.ValueFound
+				}
+
+				processedTokens = append(processedTokens, newTokenApply)
+				previousTokens = []Token{}
+				tokensCounter = 0
 			} else {
 				previousTokens = append(previousTokens, tokenFound)
 			}
