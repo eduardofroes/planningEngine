@@ -1,2 +1,3 @@
-# planningEngine
-Planning Engine designed to works with intengent agents.
+# CST Planning Engine
+This project is intiative in building a planning system for inteligent agents.
+
